@@ -10,27 +10,30 @@
 
 \subsection{研究背景(小小標)}
 
-\text 背景內文背景內文背景內文背景內文,背景內文背景內文背景內文背景內文背景內文背景內文，如表 1.1 所示。
+\text 
+In recent years, Unmanned Aerial Vehicle Networks (UAV Networks) have emerged as a network architecture in which multiple UAVs communicate with one another through wireless links to support information exchange and collaborative missions [1]. UAV networks have been increasingly adopted in a wide range of applications, including military operations, medical supply delivery to remote areas, e-commerce logistics, and disaster response. Owing to their ease of deployment, high mobility, and relatively low deployment cost, UAV networks can rapidly provide flexible communication services in remote or challenging environments where conventional terrestrial network infrastructure is insufficient, damaged, or difficult to deploy [2], [3]. In addition, UAVs can serve as aerial base stations or aerial relay nodes. Benefiting from the communication advantages enabled by their higher deployment altitude and Line-of-Sight (LoS) links, UAVs can extend the coverage of terrestrial networks and improve communication accessibility [3], [4]. Meanwhile, UAVs have also been increasingly integrated with the Internet of Things (IoT) and Wireless Sensor Networks (WSNs) for applications such as data collection, communication relaying, and network coverage extension [2].
 
-\begin{table*}[htbp]
-    \centering
-    \caption{表格範例標題} \label{tab: complexity}
-    \makebox[\linewidth][c]{
-    \renewcommand\arraystretch{1.2}{
-        \begin{tabular}{| l | c  c  c  c |}
-        \hline
-        Protocol & $P$ & $CS_1$ & $CS_2$ & $RG$ \\
-        \hline
-        SD & $O(1)$, $O(1)$, N/A & $O(n-t)$, $O(1)$, N/A & $O(n-t)$, $O(1)$, N/A & $O(1)$, $O(n)$, $O(n)$ \\
-        MSSMul & $O(1)$, $O(1)$, N/A & $O(n-t)$, $O(n)$, $O(1)$ & $O(n-t)$, $O(n)$, N/A & $O(1)$, $O(n)$, $O(n)$ \\
-        MSSAdd & $O(1)$, $O(1)$, N/A & $O(n-t)$, $O(n)$, $O(1)$ & N/A, N/A, N/A & $O(1)$, $O(n)$, $O(n)$ \\
-        SC & $O(1)$, $O(1)$, N/A & $O(n-t)$, $O(n)$, $O(1)$ & $O(n-t)$, $O(n)$, N/A & $O(1)$, $O(n)$, $O(n)$ \\
-        \hline 
-        \end {tabular}
-    }}
-\end {table*}
+As the number of UAVs and the scale of UAV networks increase, conventional distributed network architectures face growing challenges in topology management, routing decisions, resource allocation, and network state monitoring. Consequently, Software-Defined Networking (SDN) has been introduced into UAV networks, giving rise to Software-Defined UAV (SD-UAV) networks [5]. The fundamental concept of SDN is the separation of the control plane from the data plane, allowing network resources and forwarding behaviors to be centrally managed by an SDN controller. With a global view of the network, the SDN controller can obtain UAV node and topology information in real time and dynamically adjust routing paths, traffic forwarding policies, and resource allocation according to the current network conditions. Furthermore, centralized network visibility enables the SDN controller to perform traffic monitoring, security policy enforcement, and anomalous behavior detection. Therefore, SDN has gradually become an important technology for improving resource management and enhancing network topology security in UAV networks.
 
-\subsubsection{研究動機(小小標)}
+% \begin{table*}[htbp]
+%     \centering
+%     \caption{表格範例標題} \label{tab: complexity}
+%     \makebox[\linewidth][c]{
+%     \renewcommand\arraystretch{1.2}{
+%         \begin{tabular}{| l | c  c  c  c |}
+%         \hline
+%         Protocol & $P$ & $CS_1$ & $CS_2$ & $RG$ \\
+%         \hline
+%         SD & $O(1)$, $O(1)$, N/A & $O(n-t)$, $O(1)$, N/A & $O(n-t)$, $O(1)$, N/A & $O(1)$, $O(n)$, $O(n)$ \\
+%         MSSMul & $O(1)$, $O(1)$, N/A & $O(n-t)$, $O(n)$, $O(1)$ & $O(n-t)$, $O(n)$, N/A & $O(1)$, $O(n)$, $O(n)$ \\
+%         MSSAdd & $O(1)$, $O(1)$, N/A & $O(n-t)$, $O(n)$, $O(1)$ & N/A, N/A, N/A & $O(1)$, $O(n)$, $O(n)$ \\
+%         SC & $O(1)$, $O(1)$, N/A & $O(n-t)$, $O(n)$, $O(1)$ & $O(n-t)$, $O(n)$, N/A & $O(1)$, $O(n)$, $O(n)$ \\
+%         \hline 
+%         \end {tabular}
+%     }}
+% \end {table*}
+
+\subsection{研究動機(小小標)}
 
 \begin{equation} 
     \mbox{$(1+x)^n = 1 + \dfrac{nx}{1!} + \dfrac{n(n-1)x^2}{2!}$}
