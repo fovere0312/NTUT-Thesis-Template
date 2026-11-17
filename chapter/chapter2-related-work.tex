@@ -1,36 +1,109 @@
 \begin{ZhChapter}
 
-\chapter{若標題太長，則可以分成兩行排列的形式撰寫}
+\text
 
-\section{名詞定義（小標）}
+\chapter{Related Work}
 
-定義定義定義定義定義定義\cite{latex2e}，定義定義定義定義，定義定義定義定義定義定義定義定義定義定義，定義定義。
+Existing security research on Software-Defined UAV (SD-UAV) networks has proposed various defense mechanisms from different perspectives, including network topology protection, DDoS detection and mitigation, and network resource management. Among these approaches, topology deception aims to reduce the likelihood of key UAVs being selected as attack targets by manipulating the network topology observed by attackers [6, 8]. In contrast, DDoS detection and mitigation primarily focus on identifying anomalous traffic and reducing the impact of malicious packets on network services through traffic control mechanisms [7, 10]. However, when attackers are misled by topology deception and direct a large volume of attack traffic toward honeypot UAVs, legitimate services may still be affected due to the sharing of underlying physical network resources. Therefore, this chapter reviews related studies from four perspectives: topology deception, DDoS detection and mitigation, link-flooding attacks, and resource-aware traffic engineering and isolation. Furthermore, it analyzes the extent to which existing approaches consider both deception effectiveness and physical network resource protection in SD-UAV networks.
 
-\begin{table*}[htbp]
+\section{Topology Deception in SD-UAV Networks}
+
+Topology deception is a proactive defense technique that manipulates the network topology information obtained by attackers to mislead their attack target selection. Tan et al. \cite{tan:2022} proposed an SDN-based topology deception mechanism that utilizes the centralized management capabilities of an SDN controller to construct a virtual topology different from the actual network topology, thereby concealing key UAVs with high topological importance. In their approach, a key drones decider first identifies critical nodes that require protection based on changes in network connectivity following UAV node failures. Subsequently, a Minimum Spanning Tree (MST) is employed to construct a basic virtual topology. Through the deployment of honeypot UAVs and the adjustment of virtual links, honeypot UAVs are assigned higher topological importance in the network topology observed by attackers, thereby inducing attackers to select them as attack targets. In addition, a Rule Generator is employed to identify and redirect malicious topology probing packets, allowing attackers to obtain manipulated topology information.
+
+Hashan and Pu \cite{hashan:2026} also applied SDN-based topology deception to the security protection of UAV swarms, demonstrating that manipulating attackers' observations of network topology has become an important defense approach for UAV networks. However, the defense effectiveness of the mechanism proposed by Tan et al. \cite{tan:2022} is primarily evaluated based on attack target selection and network connectivity following UAV node failures. Although the study considers the deployment distances of honeypot UAVs and wireless communication constraints, it does not explicitly incorporate physical link loads and resource contention caused by high-volume DDoS attack traffic into its defense mechanism. Therefore, even when attackers are successfully misled by the virtual topology, it remains necessary to investigate whether the attack traffic attracted by honeypot UAVs may affect the service availability of the underlying physical network.
+
+\section{DDoS Detection and Mitigation in SD-UAV Networks}
+
+Distributed Denial-of-Service (DDoS) attacks consume network bandwidth, forwarding resources, or node processing capacity by generating large volumes of malicious packets, resulting in service disruption or degradation of communication quality. Due to the limited resources, highly dynamic network topology, and centralized SDN control architecture of SD-UAV networks, DDoS detection and mitigation have become important network security concerns.
+
+Rabah et al. \cite{ouldrabah:2024} proposed an SDN-UAV defense architecture integrating ensemble learning and honeypot UAVs. Their approach employs machine learning models to identify malicious traffic and utilizes honeypot UAVs to collect potential attack information, thereby supporting detection model updates and the blocking of traffic from malicious sources. On the other hand, Wang et al. \cite{wang:2015} proposed FloodGuard to address data-to-control plane saturation attacks in SDN architectures. Their study analyzed the resource burden imposed on SDN controllers and the data plane by Packet-In messages generated from large volumes of table-miss packets. To mitigate such attacks, FloodGuard employs a Proactive Flow Rule Analyzer and a Packet Migration Mechanism.
+
+Furthermore, Qin et al. \cite{qin:2025} integrated Automated Traffic Control (ATC) and Moving Target Defense (MTD) into SDN-based Industrial Control Systems. Their approach dynamically adjusts traffic control strategies according to network bandwidth utilization and packet transmission rates to reduce the impact of DDoS attacks on legitimate communications.
+
+These studies demonstrate that SDN can leverage its traffic monitoring and dynamic control capabilities to enhance network defenses against DDoS attacks. However, their primary defense objectives focus on malicious traffic identification, control plane resource protection, or attack mitigation in specific network environments. They do not directly address the resource contention arising from shared physical forwarding paths when attack traffic is successfully redirected by topology deception in SD-UAV networks.
+
+\section{Link-Flooding Attacks and Collateral Damage}
+
+Attackers can not only launch DDoS attacks against specific nodes in UAV networks but also indirectly affect overall network availability by generating large volumes of traffic to exhaust the bandwidth of network links along forwarding paths. Kang et al. \cite{kang:2013} introduced the Crossfire attack, in which distributed attack sources generate traffic toward multiple publicly accessible servers, causing attack packets to converge on specific network links. This traffic concentration results in link congestion and disrupts legitimate services that depend on these links. Since the attack packets are not necessarily destined for the nodes or services experiencing disruption, such attacks demonstrate that shared physical network resources can become critical factors in indirect denial-of-service attacks, including those that may affect UAV networks.
+
+To defend against link-flooding attacks, Kang et al. \cite{kang:2016} further proposed SPIFFY, which employs SDN-based traffic engineering to temporarily increase the effective bandwidth of congested links. By observing traffic sources and their responses to bandwidth changes, SPIFFY assists in identifying traffic exhibiting persistent attack behavior. In addition, Xie and Ding \cite{xie:2019} proposed a defense mechanism integrating SDN and Moving Target Defense (MTD), which mitigates the impact of Crossfire attacks on critical links through network monitoring and dynamic routing adjustments.
+
+These studies indicate that even when attackers do not directly target specific functional nodes, congestion on shared communication links may still cause collateral damage. This observation provides an important insight into SD-UAV topology deception. When attackers are misled by a virtual topology and direct large volumes of DDoS traffic toward honeypot UAVs, the attack traffic may share the same physical forwarding paths or wireless communication links as legitimate services. Consequently, the resulting resource contention may indirectly disrupt the normal communications of key UAVs, even before the honeypot UAVs become unavailable.
+
+However, Crossfire attacks primarily investigate scenarios in which attackers deliberately select specific network links for disruption. Whether the attack traffic induced by topology deception may lead to similar traffic concentration and resource contention remains to be further analyzed and validated.
+
+\section{Resource-Aware Traffic Engineering and Isolation}
+
+To reduce the impact of network congestion and uneven resource utilization on communication services, resource-aware traffic engineering dynamically adjusts traffic forwarding paths based on network load and resource utilization information, such as link utilization and available bandwidth. Such mechanisms aim to improve network load distribution and reduce the risk of congestion \cite{rostami:2024}. In SDN architectures, controllers can leverage their global network view and programmability to perform traffic engineering strategies, such as traffic rerouting, according to current network conditions. Furthermore, defensive measures such as rate limiting and flow-based traffic control can be incorporated to restrict the consumption of limited network resources by anomalous traffic [12, 14].
+
+Xie and Ding \cite{xie:2019} utilized the programmability of SDN to dynamically adjust network routing after detecting link-flooding attacks, thereby reducing congestion on specific network links. In addition, Matencio-Escolar et al. \cite{matencio:2024} proposed a security defense architecture integrating honeynets and network slicing. Their approach redirects identified malicious traffic to network slices with lower bandwidth allocations and priorities, thereby limiting the network resources available to attack traffic and reducing its impact on legitimate services. Furthermore, Qin et al. \cite{qin:2025} employed Automated Traffic Control to adjust traffic handling strategies based on real-time bandwidth utilization and packet transmission rates, demonstrating that dynamic resource control can be applied to mitigate network load caused by DDoS attacks.
+
+However, these approaches have primarily been applied to conventional SDN, 5G IoT, or Industrial Control System environments. They have not specifically investigated the physical resource-sharing relationships between attack traffic attracted by honeypot UAVs and the actual key UAVs in the SD-UAV topology deception architecture proposed by Tan et al. \cite{tan:2022}.
+
+Therefore, building upon the existing topology deception mechanism, this study further investigates how an SDN controller can monitor physical network resource utilization under DDoS attack scenarios and dynamically adjust the forwarding or restriction of attack traffic through dynamic traffic mitigation strategies when anomalous traffic is detected. The objective is to reduce the collateral damage caused by malicious traffic to shared communication links and the legitimate services provided by key UAVs, while preserving the deception effectiveness of the original topology deception mechanism.
+
+\section{Research Gap}
+
+Based on the aforementioned studies, existing security defense mechanisms for SD-UAV networks primarily focus on topology deception, DDoS detection and mitigation, and resource-aware traffic control \cite{tan:2022}--\cite{rostami:2024}. However, existing topology deception studies mainly evaluate defense effectiveness in terms of attack target selection and network connectivity, without sufficiently considering the impact of high-volume DDoS attack traffic on underlying physical network resources.
+
+When attackers are misled by a virtual topology and redirect their attack traffic toward honeypot UAVs, malicious packets may still share physical forwarding paths and wireless communication links with legitimate traffic, potentially resulting in link congestion and collateral damage.
+
+To address this research gap, this study proposes a DDoS-aware topology deception mechanism that integrates the traffic monitoring and dynamic control capabilities of an SDN controller. The proposed mechanism aims to reduce the impact of attack traffic on critical communication resources and legitimate service availability while maintaining the effectiveness of topology deception.
+
+\begin{table}[htbp]
     \centering
-    \caption{表格範例標題} \label{tab: complexity}
-    \makebox[\linewidth][c]{
-    \renewcommand\arraystretch{1.2}{
-        \begin{tabular}{| l | c  c  c  c |}
+    \caption{Comparison of Related Works and Our Scheme}
+    \label{tab:related_work_comparison}
+
+    \small
+    \renewcommand{\arraystretch}{1.3}
+    \setlength{\tabcolsep}{6pt}
+
+    \begin{tabularx}{\linewidth}{@{}Xcccc@{}}
         \hline
-        Protocol & $P$ & $CS_1$ & $CS_2$ & $RG$ \\
+        \textbf{Feature}
+        & \textbf{[6]}
+        & \textbf{[7]}
+        & \textbf{[8]}
+        & \textbf{Ours} \\
         \hline
-        MSSMul & $O(1)$, $O(1)$, N/A & $O(n-t)$, $O(n)$, $O(1)$ & $O(n-t)$, $O(n)$, N/A & $O(1)$, $O(n)$, $O(n)$ \\
-        SC & $O(1)$, $O(1)$, N/A & $O(n-t)$, $O(n)$, $O(1)$ & $O(n-t)$, $O(n)$, N/A & $O(1)$, $O(n)$, $O(n)$ \\
-        \hline 
-        \end {tabular}
-    }}
-\end {table*}
 
-\section{模型說明（小標）}
+        Topology deception applied?
+        & $\checkmark$ & --
+        & $\checkmark$ & $\checkmark$ \\
 
-說明說明說明說明，說明說明說明說明說明說明說明說明說明說明說明說明，說明說明說明說明說明說明說明說明。
+        Key UAV protection?
+        & $\checkmark$ & --
+        & $\checkmark$ & $\checkmark$ \\
 
-\begin{figure*}[htbp]
-    \centering
-    \includegraphics[width = 0.5\textwidth]{image.jpeg}
-    \caption{Cool train station}
-    \label{fig: image}
-\end{figure*}
+        DDoS-aware mitigation?
+        & -- & $\checkmark$
+        & -- & $\checkmark$ \\
+
+        Shared-link congestion considered?
+        & -- & --
+        & -- & $\checkmark$ \\
+
+        Link-load-aware traffic control?
+        & -- & --
+        & -- & $\checkmark$ \\
+
+        Deception-preserving DDoS mitigation?
+        & -- & --
+        & -- & $\checkmark$ \\
+
+        \hline
+    \end{tabularx}
+
+    \vspace{2mm}
+
+    \parbox{\linewidth}{
+        \footnotesize
+        \textit{Note:}
+        $\checkmark$ denotes an addressed feature;
+        -- denotes a feature not addressed;
+        Features marked for Ours represent the proposed design.
+    }
+\end{table}
 
 \end{ZhChapter}
